@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.dto.response;
+package com.openclassrooms.mddapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDto {
+public class SubjectDto {
     private Long id;
-
-    private String email;
-
-    private String username;
+    private String name;
+    private String description;
+    private boolean isSubscribed;
 }

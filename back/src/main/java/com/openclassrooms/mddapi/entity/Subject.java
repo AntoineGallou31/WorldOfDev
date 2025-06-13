@@ -1,9 +1,7 @@
 package com.openclassrooms.mddapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,11 +13,12 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -28,9 +27,13 @@ public class Subject {
     private String description;
 
     @ManyToMany(mappedBy = "subscriptions")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<User> subscribers = new HashSet<>();
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Post> posts = new ArrayList<>();
 
 }

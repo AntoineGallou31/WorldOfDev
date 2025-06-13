@@ -11,4 +11,5 @@ public interface UserService {
     UserResponseDto getUserById(Long id);
 
     MessageResponseDto updateUserById(Long id, UserUpdateDto userUpdateDto);
+
 }
