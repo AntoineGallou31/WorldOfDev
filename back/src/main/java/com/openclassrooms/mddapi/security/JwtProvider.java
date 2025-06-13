@@ -25,16 +25,21 @@ public class JwtProvider {
      * @param userDetails the user's details
      * @return the generated JWT token as a String
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, String identifierType) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername()) // Set the username as the subject of the token
-                .setIssuedAt(new Date(System.currentTimeMillis())) // Set the current time as the token issue date
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // Set expiration time to 1 hour from now
+                .setSubject(userDetails.getUsername())
+                .claim("identifierType", identifierType)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(
-                    Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)), // Create signing key from secret
-                    SignatureAlgorithm.HS256 // Use HS256 as the signature algorithm
+                        Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)),
+                        SignatureAlgorithm.HS256
                 )
-                .compact(); // Build the token
+                .compact();
+    }
+
+    public String extractIdentifierType(String token) {
+        return extractClaim(token, claims -> claims.get("identifierType", String.class));
     }
 
     /**

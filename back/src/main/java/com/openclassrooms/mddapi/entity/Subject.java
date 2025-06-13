@@ -1,7 +1,8 @@
-package com.openclassrooms.mddapi.models;
+package com.openclassrooms.mddapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "SUBJECTS")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 

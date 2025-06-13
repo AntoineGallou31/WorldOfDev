@@ -1,21 +1,29 @@
-package com.openclassrooms.mddapi.models;
+package com.openclassrooms.mddapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "POSTS")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Comment {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -29,6 +37,10 @@ public class Comment {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    @JoinColumn(name = "subject_id", nullable = false)
+    private Subject subject;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
 }
