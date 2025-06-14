@@ -26,7 +26,7 @@ public class SubjectController {
     @Autowired
     private final SubjectService subjectService;
 
-    // Endpoint to retrieve all subjects
+    // Endpoint to retrieve all subjects with subscription status for the authenticated user
     @GetMapping
     @Operation(summary = "Get all subjects", responses = {
             @ApiResponse(responseCode = "200", description = "Subjects found", content = @Content(schema = @Schema(implementation = SubjectDto.class))),
@@ -37,6 +37,7 @@ public class SubjectController {
         return new SubjectsListResponseDto(subjects);
     }
 
+    // Endpoint to subscribe to a subject
     @PostMapping("/{id}/subscribe")
     @Operation(summary = "Subscribe to a subject", responses = {
             @ApiResponse(responseCode = "200", description = "Subscription successful", content = @Content(schema = @Schema(implementation = SubjectDto.class))),
@@ -48,6 +49,7 @@ public class SubjectController {
         return subjectService.subscribeToSubject(id, subscribeSubjectRequestDto);
     }
 
+    // Endpoint to unsubscribe from a subject
     @PostMapping("/{id}/unsubscribe")
     @Operation(summary = "Unsubscribe from a subject", responses = {
             @ApiResponse(responseCode = "200", description = "Unsubscription successful", content = @Content(schema = @Schema(implementation = SubjectDto.class))),
