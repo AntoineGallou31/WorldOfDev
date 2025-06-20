@@ -27,7 +27,7 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     // Endpoint to retrieve all subjects with subscription status for the authenticated user
-    @GetMapping
+    @GetMapping("/list")
     @Operation(summary = "Get all subjects", responses = {
             @ApiResponse(responseCode = "200", description = "Subjects found", content = @Content(schema = @Schema(implementation = SubjectDto.class))),
             @ApiResponse(responseCode = "404", description = "User not found")
