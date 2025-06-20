@@ -1,13 +1,16 @@
 package com.openclassrooms.mddapi.services.impl;
 
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.dto.request.CommentRequestDto;
 import com.openclassrooms.mddapi.dto.request.PostRequestDto;
 import com.openclassrooms.mddapi.dto.response.MessageResponseDto;
 import com.openclassrooms.mddapi.dto.response.PostListResponseDto;
+import com.openclassrooms.mddapi.entity.Comment;
 import com.openclassrooms.mddapi.entity.Post;
 import com.openclassrooms.mddapi.entity.Subject;
 import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.mapper.PostMapper;
+import com.openclassrooms.mddapi.repository.CommentRepository;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.SubjectRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -32,6 +35,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private final SubjectRepository subjectRepository;
+
+    @Autowired
+    private final CommentRepository commentRepository;
 
     @Override
     public PostListResponseDto getAllPosts() {
@@ -64,5 +70,23 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
 
         return new MessageResponseDto().setMessage("Post created successfully");
+    }
+
+    @Override
+    public MessageResponseDto addComment(Long postId, CommentRequestDto commentDto, UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername());
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        Comment comment = new Comment();
+        comment.setContent(commentDto.getContent());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUser(user);
+        comment.setPost(post);
+
+        commentRepository.save(comment);
+
+        return new MessageResponseDto().setMessage("Comment added successfully");
     }
 }
