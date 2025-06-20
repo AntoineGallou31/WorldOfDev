@@ -34,12 +34,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF protection as it's not needed for a REST API
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Active la configuration CORS// Disable CSRF protection as it's not needed for a REST API
                 .authorizeHttpRequests(auth -> auth
                         // Allows access to authentication endpoints without a JWT
                         .requestMatchers("/api/auth/**").permitAll()
-                        // Allows access to image endpoints without a JWT
-                        .requestMatchers("/api/images/**").permitAll()
                         // Allows access to Swagger UI and API docs
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // All other requests must be authenticated
@@ -65,7 +64,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // Sets the allowed origins. Replace with the URL of your frontend.
-        configuration.setAllowedOrigins(Arrays.asList("http://votre-frontend.com"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         // Sets the allowed HTTP methods
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         // Sets the allowed headers
