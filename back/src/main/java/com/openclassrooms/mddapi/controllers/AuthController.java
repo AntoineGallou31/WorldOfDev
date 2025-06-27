@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.controllers;
 import com.openclassrooms.mddapi.dto.request.LoginDto;
 import com.openclassrooms.mddapi.dto.request.RegisterUserDto;
 import com.openclassrooms.mddapi.dto.response.JwtResponseDto;
-import com.openclassrooms.mddapi.dto.response.UserResponseDto;
 import com.openclassrooms.mddapi.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,7 +11,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

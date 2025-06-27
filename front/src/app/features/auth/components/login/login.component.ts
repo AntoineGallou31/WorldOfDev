@@ -43,8 +43,7 @@ export class LoginComponent {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: () => {
-        console.log('login success');
-        this.router.navigate(['/']);
+        this.router.navigate(['/feed']);
       },
       error: () => {
         this.onError = true;
