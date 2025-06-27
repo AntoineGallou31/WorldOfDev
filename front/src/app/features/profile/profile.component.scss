@@ -1,0 +1,162 @@
+/* Variables (optional, but good practice) */
+$primary-color: #6a0dad; // A shade of purple
+$secondary-color: #8a2be2; // Another shade of purple
+$text-color: #333;
+$light-text-color: #666;
+$border-color: #ddd;
+$card-bg: #fff;
+$container-bg: #f5f5f5;
+
+.user-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: $container-bg;
+  min-height: 100vh;
+  font-family: Arial, sans-serif; // Or your preferred font
+}
+
+.user-profile-card,
+.subscriptions-section {
+  background-color: $card-bg;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 600px; // Max width for content
+  box-sizing: border-box; // Include padding in width
+}
+
+.section-title {
+  text-align: center;
+  color: $primary-color;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; // Space between form groups
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: $text-color;
+  }
+
+  input {
+    padding: 12px 15px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-size: 1em;
+    outline: none;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+}
+
+.save-button {
+  background-color: $primary-color;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+  align-self: center; // Center the button
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+.section-divider {
+  width: 80%;
+  max-width: 700px; // Match overall content width
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(106, 13, 173, 0.75), rgba(0, 0, 0, 0));
+  margin: 40px 0;
+}
+
+.subscriptions-section {
+  padding-top: 0; // Adjust padding if section title is outside
+}
+
+.subscription-cards-wrapper {
+  display: grid;
+  grid-template-columns: 1fr; // Single column by default
+  gap: 20px; // Space between subscription cards
+}
+
+.subscription-card {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); // Lighter shadow for cards
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.subscription-title {
+  color: $primary-color;
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+.subscription-description {
+  color: $light-text-color;
+  font-size: 0.95em;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1; // Allows description to take available space
+}
+
+.unsubscribe-button {
+  background-color: $secondary-color;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .user-profile-card,
+  .subscriptions-section {
+    padding: 40px; // More padding on larger screens
+  }
+
+  .subscription-cards-wrapper {
+    grid-template-columns: 1fr 1fr; // Two columns on medium screens
+  }
+}
+
+@media (min-width: 1024px) {
+  .user-profile-container {
+    padding: 40px; // More padding for larger viewports
+  }
+}

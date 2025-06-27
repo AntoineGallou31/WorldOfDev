@@ -19,9 +19,11 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Service
@@ -39,12 +41,20 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private final CommentRepository commentRepository;
 
+    @Transactional(readOnly = true)
     @Override
-    public PostListResponseDto getAllPosts() {
-        List<Post> posts = postRepository.findAllWithCommentsAndAuthors();
+    public PostListResponseDto getSubscribedPosts(UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        Set<Subject> subscriptions = user.getSubscribedSubjects();
+        List<Post> posts = postRepository.findBySubjectInWithCommentsAndAuthors(subscriptions);
         List<PostDto> postDtos = posts.stream()
                 .map(PostMapper::toDto)
                 .toList();
+
         return new PostListResponseDto(postDtos);
     }
 

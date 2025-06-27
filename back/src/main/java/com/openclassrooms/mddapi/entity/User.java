@@ -52,6 +52,24 @@ public class User implements UserDetails {
     @EqualsAndHashCode.Exclude
     private Set<Subject> subscriptions = new HashSet<>();
 
+    // Ajouter les getters et setters
+    public Set<Subject> getSubscribedSubjects() {
+        return subscriptions;
+    }
+
+    public void setSubscribedSubjects(Set<Subject> subscribedSubjects) {
+        this.subscriptions = subscribedSubjects;
+    }
+
+    // Méthodes utilitaires
+    public void subscribeToSubject(Subject subject) {
+        this.subscriptions.add(subject);
+    }
+
+    public void unsubscribeFromSubject(Subject subject) {
+        this.subscriptions.remove(subject);
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -65,6 +83,10 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList(); // Pas de rôles
+    }
+
+    public String getRealUsername() {
+        return username;
     }
 
     @Override

@@ -12,8 +12,8 @@ public class PostMapper {
 
     public static PostDto toDto(Post post) {
         PostDto dto = new PostDto();
-        dto.setId(dto.getId());
-        dto.setTitle(dto.getTitle());
+        dto.setId(post.getId());
+        dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
         dto.setCreatedAt(post.getCreatedAt());
 
@@ -25,8 +25,8 @@ public class PostMapper {
         dto.setComments(commentDtos);
 
         dto.setUserId(post.getUser() != null ? post.getUser().getId() : null);
-        dto.setUserUsername(post.getUser().getUsername());
-
+        dto.setUserUsername(post.getUser() != null ?
+                post.getUser().getRealUsername() : null);
         return dto;
     }
 
@@ -35,7 +35,8 @@ public class PostMapper {
         dto.setId(comment.getId());
         dto.setContent(comment.getContent());
         dto.setCreatedAt(comment.getCreatedAt());
-        dto.setAuthorUsername(comment.getUser().getUsername());
+        dto.setAuthorUsername(comment.getUser() != null ?
+                comment.getUser().getRealUsername() : null);
         return dto;
     }
 

@@ -8,7 +8,7 @@ import com.openclassrooms.mddapi.dto.response.PostListResponseDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface PostService {
-    PostListResponseDto getAllPosts();
+    PostListResponseDto getSubscribedPosts(UserDetails userDetails);
 
     PostDto getPostById(Long id);
 

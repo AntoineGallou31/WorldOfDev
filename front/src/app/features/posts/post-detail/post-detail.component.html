@@ -1,0 +1,55 @@
+<div class="article-page-container">
+  <header class="header">
+    <span class="material-icons back-arrow" routerLink='/feed'>arrow_back</span>
+    <h1 class="article-title">{{ post?.title}}</h1>
+  </header>
+
+  <section class="article-meta">
+    <span class="meta-item">{{ post?.createdAt }}</span>
+    <span class="meta-item">{{ post?.userUsername }}</span>
+    <span class="meta-item">{{ post?.subjectName }}</span>
+  </section>
+
+  <section class="article-content">
+    <p>{{ post?.content }}</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="comments-section">
+    <h2 class="comments-heading">Commentaires</h2>
+      <div class="comment-item" *ngFor="let comment of post?.comments">
+        <div class="comment-header">
+          <span class="comment-author">{{ comment.authorUsername }}</span>
+          <span class="comment-date">{{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="comment-content">
+          <p>{{ comment.content }}</p>
+        </div>
+      </div>
+  </section>
+
+  <section class="comment-input-section">
+    <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+      <div class="comment-input-container">
+      <textarea
+        class="comment-textarea"
+        placeholder="Écrivez ici votre commentaire"
+        formControlName="content"
+        [disabled]="submittingComment"
+      ></textarea>
+        <button
+          type="submit"
+          [disabled]="commentForm.invalid || submittingComment"
+          class="comment-submit-button"
+          title="Envoyer le commentaire"
+        >
+          <span class="material-icons send-icon">send</span>
+        </button>
+      </div>
+      <div class="error-message" *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.touched">
+        Le commentaire doit contenir au moins 2 caractères.
+      </div>
+    </form>
+  </section>
+</div>

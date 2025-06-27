@@ -1,1 +1,22 @@
-<p>subject-list works!</p>
+<div class="subjects-container">
+  <div class="subjects-grid">
+    <div
+      class="subject-card"
+      *ngFor="let subject of subjects"
+      style="cursor: pointer;"
+    >
+      <h3 class="subject-title">{{ subject.name }}</h3>
+      <p class="subject-description">
+        {{ subject.description }}
+      </p>
+      <button
+        class="subscribe-button"
+        [ngClass]="{ 'subscribed': subject.subscribed }"
+        [disabled]="subject.subscribed"
+        (click)="onSubscribe(subject); $event.stopPropagation()"
+      >
+        {{ subject.subscribed ? 'Déjà abonné' : 'S’abonner' }}
+      </button>
+    </div>
+  </div>
+</div>

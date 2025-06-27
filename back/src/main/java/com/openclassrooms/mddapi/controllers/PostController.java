@@ -30,12 +30,13 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/list")
-    @Operation(summary = "Get all subjects", responses = {
-            @ApiResponse(responseCode = "200", description = "Subjects found", content = @Content(schema = @Schema(implementation = SubjectsListResponseDto.class))),
+    @Operation(summary = "Get posts from user's subscribed subjects", responses = {
+            @ApiResponse(responseCode = "200", description = "Posts found", content = @Content(schema = @Schema(implementation = PostListResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public ResponseEntity<PostListResponseDto> getAllPosts() {
-        PostListResponseDto response = postService.getAllPosts();
+    public ResponseEntity<PostListResponseDto> getAllPosts(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
+        PostListResponseDto response = postService.getSubscribedPosts(userDetails);
         return ResponseEntity.ok(response);
     }
 

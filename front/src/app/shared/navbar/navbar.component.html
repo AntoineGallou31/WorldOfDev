@@ -1,1 +1,15 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="logo">
+    <img ngSrc="/assets/logo_p6.png" alt="logo" height="50" width="60"/>
+  </div>
+
+  <div class="nav-links">
+    <a (click)="logout()" class="logout">Se déconnecter</a>
+    <a routerLink="/feed" routerLinkActive="active">Articles</a>
+    <a routerLink="/subjects" routerLinkActive="active">Thèmes</a>
+  </div>
+
+  <div class="profile-icon" routerLink="/profile" routerLinkActive="active">
+    <img src="assets/user-icon.svg" alt="Profil" />
+  </div>
+</nav>

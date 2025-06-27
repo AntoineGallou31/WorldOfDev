@@ -1,1 +1,38 @@
-<p>profile works!</p>
+<div class="user-profile-container">
+  <div class="user-profile-card">
+    <h2 class="section-title">Profil utilisateur</h2>
+
+    <form class="user-form">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" id="username" placeholder="Username" [(ngModel)]="user.username" name="username">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="email@email.fr" [(ngModel)]="user.email" name="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="Mot de passe" [(ngModel)]="user.password" name="password">
+      </div>
+
+      <button type="submit" class="save-button" (click)="saveProfile()">Sauvegarder</button>
+    </form>
+  </div>
+
+  <hr class="section-divider">
+
+  <div class="subscriptions-section">
+    <h2 class="section-title">Abonnements</h2>
+
+    <div class="subscription-cards-wrapper">
+      <div class="subscription-card" *ngFor="let subscription of subscriptions">
+        <h3 class="subscription-title">{{ subscription.title }}</h3>
+        <p class="subscription-description">{{ subscription.description }}</p>
+        <button class="unsubscribe-button" (click)="unsubscribe(subscription.id)">Se désabonner</button>
+      </div>
+    </div>
+  </div>
+</div>
