@@ -1,13 +1,13 @@
 <div class="article-page-container">
   <header class="header">
     <span class="material-icons back-arrow" routerLink='/feed'>arrow_back</span>
-    <h1 class="article-title">{{ post?.title}}</h1>
+    <h1 class="article-title">{{ post?.title | titlecase}}</h1>
   </header>
 
   <section class="article-meta">
-    <span class="meta-item">{{ post?.createdAt }}</span>
-    <span class="meta-item">{{ post?.userUsername }}</span>
-    <span class="meta-item">{{ post?.subjectName }}</span>
+    <span class="meta-item">{{ post?.createdAt | date }}</span>
+    <span class="meta-item">{{ post?.userUsername | titlecase }}</span>
+    <span class="meta-item">{{ post?.subjectName | titlecase }}</span>
   </section>
 
   <section class="article-content">
@@ -21,7 +21,6 @@
       <div class="comment-item" *ngFor="let comment of post?.comments">
         <div class="comment-header">
           <span class="comment-author">{{ comment.authorUsername }}</span>
-          <span class="comment-date">{{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
         <div class="comment-content">
           <p>{{ comment.content }}</p>

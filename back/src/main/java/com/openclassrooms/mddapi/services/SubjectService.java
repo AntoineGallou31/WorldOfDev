@@ -11,7 +11,7 @@ import java.util.List;
 public interface SubjectService {
     List<SubjectDto> getAllSubjectsWithSubscriptionStatus(UserDetails userDetails);
 
-    MessageResponseDto subscribeToSubject(Long userId, SubscribeSubjectRequestDto subscribeSubjectRequestDto);
+    MessageResponseDto subscribeToSubject(Long subjectId, UserDetails userDetails);
 
-    MessageResponseDto unsubscribeFromSubject(Long userId, SubscribeSubjectRequestDto unsubscribeSubjectRequestDto);
+    MessageResponseDto unsubscribeFromSubject(Long subjectId, UserDetails userDetails);
 }

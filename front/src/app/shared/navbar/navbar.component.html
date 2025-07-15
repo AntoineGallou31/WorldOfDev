@@ -1,15 +1,44 @@
-<nav class="navbar">
-  <div class="logo">
-    <img ngSrc="/assets/logo_p6.png" alt="logo" height="50" width="60"/>
-  </div>
+<div>
+  <mat-sidenav-container>
+    <!-- Sidenav -->
+    <mat-sidenav #sidenav mode="over" position="end">
+      <mat-nav-list>
+        <div class="sidenav-content">
+          <div class="nav-links">
+            <a (click)="logout()" class="logout">Se déconnecter</a>
+            <a routerLink="/feed" routerLinkActive="active">Articles</a>
+            <a routerLink="/subjects" routerLinkActive="active">Thèmes</a>
+          </div>
+          <div class="profile-icon" routerLink="/profile" routerLinkActive="active">
+            <img src="assets/icon_user.png" alt="Profil" />
+          </div>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
 
-  <div class="nav-links">
-    <a (click)="logout()" class="logout">Se déconnecter</a>
-    <a routerLink="/feed" routerLinkActive="active">Articles</a>
-    <a routerLink="/subjects" routerLinkActive="active">Thèmes</a>
-  </div>
-
-  <div class="profile-icon" routerLink="/profile" routerLinkActive="active">
-    <img src="assets/user-icon.svg" alt="Profil" />
-  </div>
-</nav>
+    <mat-sidenav-content>
+      <mat-toolbar class="navbar">
+        <mat-toolbar-row>
+          <div class="logo">
+            <img src="/assets/logo_p6.png" alt="logo"/>
+          </div>
+          <span class="menu-spacer"></span>
+          <div class="desktop-menu">
+            <div class="nav-links">
+              <a (click)="logout()" class="logout">Se déconnecter</a>
+              <a routerLink="/feed" routerLinkActive="active">Articles</a>
+              <a routerLink="/subjects" routerLinkActive="active">Thèmes</a>
+            </div>
+            <div class="profile-icon" routerLink="/profile" routerLinkActive="active">
+              <img src="assets/icon_user.png" alt="Profil" />
+            </div>
+          </div>
+          <button mat-icon-button class="menu-button" (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -49,7 +49,7 @@ import { Component, OnInit } from '@angular/core';
 
     onSubmit(): void {
       if (this.postForm.invalid) {
-        this.markFormGroupTouched(this.postForm);
+          this.markFormGroupTouched(this.postForm);
         return;
       }
 

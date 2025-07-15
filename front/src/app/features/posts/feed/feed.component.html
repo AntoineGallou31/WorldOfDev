@@ -14,10 +14,10 @@
 
         <div class="articles-grid" *ngIf="!loading && !error">
           <div class="article-card" *ngFor="let post of posts" [routerLink]="['/posts', post.id]">
-            <h3 class="article-title">{{ post.title }}</h3>
+            <h3 class="article-title">{{ post.title | titlecase }}</h3>
             <div class="article-meta">
               <span>{{ post.createdAt | date }}</span>
-              <span>{{ post.userUsername}}</span>
+              <span>{{ post.userUsername | titlecase }}</span>
             </div>
             <p class="article-content">
               {{ post.content }}...

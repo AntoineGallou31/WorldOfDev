@@ -1,38 +1,62 @@
-<div class="user-profile-container">
-  <div class="user-profile-card">
-    <h2 class="section-title">Profil utilisateur</h2>
+<div class="profile-container">
+  <h2>Profil utilisateur</h2>
 
-    <form class="user-form">
-      <div class="form-group">
-        <label for="username">Nom d'utilisateur</label>
-        <input type="text" id="username" placeholder="Username" [(ngModel)]="user.username" name="username">
+  <form class="profile-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="user">
+    <div class="form-group">
+      <input
+        type="text"
+        placeholder="Nom d'utilisateur"
+        class="form-input"
+        formControlName="username"
+        value="{{ user.username }}"
+      />
+      <div class="error-message" *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched">
+        Le nom d'utilisateur est requis (minimum 3 caractères)
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="email@email.fr" [(ngModel)]="user.email" name="email">
+    <div class="form-group">
+      <input
+        type="email"
+        placeholder="Adresse email"
+        class="form-input"
+        formControlName="email"
+        value="{{ user.email }}"
+      />
+      <div class="error-message" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+        Entrez une adresse email valide
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" placeholder="Mot de passe" [(ngModel)]="user.password" name="password">
+    <div class="form-group">
+      <input
+        type="password"
+        placeholder="Nouveau mot de passe"
+        class="form-input"
+        formControlName="password"
+      />
+      <div class="error-message" *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched">
+        Le mot de passe doit contenir au moins 6 caractères.
       </div>
+    </div>
 
-      <button type="submit" class="save-button" (click)="saveProfile()">Sauvegarder</button>
-    </form>
-  </div>
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-  <hr class="section-divider">
+    <button type="submit" class="submit-button" [disabled]="submitting || profileForm.invalid">
+      {{ submitting ? 'Sauvegarde en cours...' : 'Sauvegarder' }}
+    </button>
+  </form>
 
-  <div class="subscriptions-section">
-    <h2 class="section-title">Abonnements</h2>
+  <hr />
 
-    <div class="subscription-cards-wrapper">
-      <div class="subscription-card" *ngFor="let subscription of subscriptions">
-        <h3 class="subscription-title">{{ subscription.title }}</h3>
-        <p class="subscription-description">{{ subscription.description }}</p>
-        <button class="unsubscribe-button" (click)="unsubscribe(subscription.id)">Se désabonner</button>
-      </div>
+  <h2>Abonnements</h2>
+
+  <div class="subscriptions">
+    <div class="subscription-card" *ngFor="let subject of subjects">
+      <h3>{{ subject.name }}</h3>
+      <p>Description : {{ subject.description }}</p>
+      <button class="unsubscribe-btn" (click)="unsubscribe(subject)">Se désabonner</button>
     </div>
   </div>
 </div>
+

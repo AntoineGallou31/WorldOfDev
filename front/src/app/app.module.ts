@@ -16,19 +16,27 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SubjectListComponent} from "./features/subjects/subject-list/subject-list.component";
 import {PostDetailComponent} from "./features/posts/post-detail/post-detail.component";
 import { PostCreateComponent } from './features/posts/post-create/post-create.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, ProfileComponent, LayoutComponent, NavbarComponent, FeedComponent, SubjectListComponent, PostDetailComponent, PostCreateComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        HttpClientModule,
-        NgOptimizedImage,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    HttpClientModule,
+    NgOptimizedImage,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
+  ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })

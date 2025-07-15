@@ -1,37 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+  import { SubjectService } from '../services/subject.service';
+import {Subject} from "../../../core/interfaces/subject";
 
-@Component({
-  selector: 'app-subject-list',
-  templateUrl: './subject-list.component.html',
-  styleUrls: ['./subject-list.component.scss']
-})
-export class SubjectListComponent implements OnInit {
+  @Component({
+    selector: 'app-subject-list',
+    templateUrl: './subject-list.component.html',
+    styleUrls: ['./subject-list.component.scss']
+  })
+  export class SubjectListComponent implements OnInit {
 
-  subjects = [
-    {
-      id : 1,
-      name: "Titre du thème",
-      description: "Description: lorem ipsum is simply dummy text of the printing and typesetting industry...",
-      subscribed: false
-    },
-    {
-      id : 2,
-      name: "Titre du thème",
-      description: "Description: lorem ipsum is simply dummy text of the printing and typesetting industry...",
-      subscribed: true
+    subjects: Subject[] = [];
+    loading = false;
+    error: string | null = null;
+
+    constructor(private subjectService: SubjectService) { }
+
+    ngOnInit(): void {
+      this.loadSubjects();
     }
-  ];
 
-  constructor() { }
+    loadSubjects(): void {
+      this.loading = true;
+      this.error = null;
 
-  ngOnInit(): void {
-  }
+      this.subjectService.getAllSubjects().subscribe({
+        next: (data) => {
+          this.subjects = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement des sujets', err);
+          this.error = 'Impossible de charger les sujets.';
+          this.loading = false;
+        }
+      });
+    }
 
-  onSubscribe(subject: any) {
-    if (!subject.subscribed) {
-      // Appel à ton service ici
-      subject.subscribed = true;
+    onSubscribe(subject: Subject): void {
+      if (!subject.subscribed) {
+        this.subjectService.subscribeToSubject(subject.id).subscribe({
+          next: () => {
+            subject.subscribed = true;
+          },
+          error: (err) => {
+            console.error('Erreur lors de l\'abonnement', err);
+          }
+        });
+      }
     }
   }
-
-}

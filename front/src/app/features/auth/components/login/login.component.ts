@@ -19,7 +19,6 @@ export class LoginComponent {
       '',
       [
         Validators.required,
-        Validators.email
       ]
     ],
     password: [
@@ -43,7 +42,7 @@ export class LoginComponent {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: () => {
-        this.router.navigate(['/feed']);
+        this.router.navigate(['/subjects']);
       },
       error: () => {
         this.onError = true;

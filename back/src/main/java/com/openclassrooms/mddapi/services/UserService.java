@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UserService {
     UserDetails loadUserByEmail(String email);
 
-    UserResponseDto getUserById(Long id);
+    UserResponseDto getUser( UserDetails userDetails);
 
     MessageResponseDto updateUserById(Long id, UserUpdateDto userUpdateDto);
 

@@ -47,13 +47,10 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public MessageResponseDto subscribeToSubject(Long userId, SubscribeSubjectRequestDto subscribeSubjectRequestDto) {
+    public MessageResponseDto  subscribeToSubject(Long subjectId, UserDetails userDetails) {
+        Long userId = getUserIdFromUserDetails(userDetails);
+        Subject subject = getSubjectOrThrow(subjectId);
         User user = getUserOrThrow(userId);
-        Subject subject = getSubjectOrThrow(subscribeSubjectRequestDto.getSubjectId());
-
-        if (user.getSubscriptions().contains(subject)) {
-            return new MessageResponseDto().setMessage("User already subscribed to this subject");
-        }
 
         user.getSubscriptions().add(subject);
         userRepository.save(user);
@@ -62,13 +59,10 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public MessageResponseDto unsubscribeFromSubject(Long userId, SubscribeSubjectRequestDto unsubscribeSubjectRequestDto) {
+    public MessageResponseDto unsubscribeFromSubject(Long subjectId, UserDetails userDetails) {
+        Long userId = getUserIdFromUserDetails(userDetails);
+        Subject subject = getSubjectOrThrow(subjectId);
         User user = getUserOrThrow(userId);
-        Subject subject = getSubjectOrThrow(unsubscribeSubjectRequestDto.getSubjectId());
-
-        if (!user.getSubscriptions().contains(subject)) {
-            return new MessageResponseDto().setMessage("User already unsubscribed from this subject");
-        }
 
         user.getSubscriptions().remove(subject);
         userRepository.save(user);

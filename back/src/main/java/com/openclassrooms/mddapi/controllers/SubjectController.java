@@ -44,9 +44,9 @@ public class SubjectController {
             @ApiResponse(responseCode = "404", description = "Subject not found")
     })
     public MessageResponseDto subscribeToSubject(
-            @Parameter(description = "User ID", required = true) @PathVariable Long id,
-            @RequestBody SubscribeSubjectRequestDto subscribeSubjectRequestDto) {
-        return subjectService.subscribeToSubject(id, subscribeSubjectRequestDto);
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long id) {
+        return subjectService.subscribeToSubject(id, userDetails);
     }
 
     // Endpoint to unsubscribe from a subject
@@ -56,9 +56,9 @@ public class SubjectController {
             @ApiResponse(responseCode = "404", description = "Subject not found")
     })
     public MessageResponseDto unsubscribeFromSubject(
-            @Parameter(description = "User ID", required = true) @PathVariable Long id,
-            @RequestBody SubscribeSubjectRequestDto unsubscribeSubjectRequestDto) {
-        return subjectService.unsubscribeFromSubject(id, unsubscribeSubjectRequestDto);
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long id) {
+        return subjectService.unsubscribeFromSubject(id, userDetails);
     }
 
 }
