@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponseDto authenticate(LoginDto loginDto) {
         String identifier = loginDto.getIdentifier();
         if (identifier == null || identifier.isBlank()) {
-            throw new BadCredentialsException("Identifiant manquant");
+            throw new BadCredentialsException("Missing argument: identifier");
         }
         User user;
         String identifierType;
@@ -53,12 +53,12 @@ public class AuthServiceImpl implements AuthService {
             identifierType = "email";
         } else {
             user = userRepository.findByUsername(identifier)
-                    .orElseThrow(() -> new BadCredentialsException("Identifiants invalides"));
+                    .orElseThrow(() -> new BadCredentialsException("Identifier not valid"));
             identifierType = "username";
         }
 
         if (user == null || !passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Identifiants invalides");
+            throw new BadCredentialsException("Password not valid");
         }
 
         String jwtToken = jwtProvider.generateToken(user, identifierType);

@@ -30,10 +30,6 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/list")
-    @Operation(summary = "Get posts from user's subscribed subjects", responses = {
-            @ApiResponse(responseCode = "200", description = "Posts found", content = @Content(schema = @Schema(implementation = PostListResponseDto.class))),
-            @ApiResponse(responseCode = "404", description = "User not found")
-    })
     public ResponseEntity<PostListResponseDto> getAllPosts(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
         PostListResponseDto response = postService.getSubscribedPosts(userDetails);
@@ -41,10 +37,6 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get all subjects", responses = {
-            @ApiResponse(responseCode = "200", description = "Subjects found", content = @Content(schema = @Schema(implementation = PostDto.class))),
-            @ApiResponse(responseCode = "404", description = "User not found")
-    })
     public ResponseEntity<PostDto> getPostById(
             @Parameter(description = "User ID", required = true) @PathVariable Long id)
      {
@@ -53,10 +45,6 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    @Operation(summary = "Create a new post", responses = {
-            @ApiResponse(responseCode = "201", description = "Post created successfully", content = @Content(schema = @Schema(implementation = PostDto.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input")
-    })
     public MessageResponseDto createPost(
             @Valid @RequestBody PostRequestDto postRequestDto,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
