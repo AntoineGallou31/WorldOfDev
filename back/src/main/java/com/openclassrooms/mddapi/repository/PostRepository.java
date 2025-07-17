@@ -9,6 +9,7 @@ import com.openclassrooms.mddapi.entity.Post;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -20,5 +21,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findBySubjectInWithCommentsAndAuthors(@Param("subjects") Collection<Subject> subjects);
 
     @Query("SELECT p FROM Post p LEFT JOIN FETCH p.comments WHERE p.id = :id")
-    Post findByIdWithComments(Long id);
+    Optional<Post> findByIdWithComments(Long id);
 }

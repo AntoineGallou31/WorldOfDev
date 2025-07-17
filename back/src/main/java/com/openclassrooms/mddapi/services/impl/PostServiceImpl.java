@@ -9,6 +9,9 @@ import com.openclassrooms.mddapi.entity.Comment;
 import com.openclassrooms.mddapi.entity.Post;
 import com.openclassrooms.mddapi.entity.Subject;
 import com.openclassrooms.mddapi.entity.User;
+import com.openclassrooms.mddapi.exception.PostNotFoundException;
+import com.openclassrooms.mddapi.exception.SubjectNotFoundException;
+import com.openclassrooms.mddapi.exception.UserNotFoundException;
 import com.openclassrooms.mddapi.mapper.PostMapper;
 import com.openclassrooms.mddapi.repository.CommentRepository;
 import com.openclassrooms.mddapi.repository.PostRepository;
@@ -46,7 +49,7 @@ public class PostServiceImpl implements PostService {
     public PostListResponseDto getSubscribedPosts(UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername());
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         Set<Subject> subscriptions = user.getSubscribedSubjects();
@@ -60,16 +63,20 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto getPostById(Long id) {
-        Post post = postRepository.findByIdWithComments(id);
+        Post post = postRepository.findByIdWithComments(id)
+                .orElseThrow(() -> new PostNotFoundException("Post not found with ID: " + id));
         return PostMapper.toDto(post);
     }
 
     @Override
     public MessageResponseDto createPost(PostRequestDto postRequestDto, UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
 
         Subject subject = subjectRepository.findById(postRequestDto.getSubjectId())
-                .orElseThrow(() -> new RuntimeException("Subject not found"));
+                .orElseThrow(() -> new SubjectNotFoundException("Subject not found"));
 
         Post post = new Post();
         post.setTitle(postRequestDto.getTitle());
@@ -85,9 +92,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public MessageResponseDto addComment(Long postId, CommentRequestDto commentDto, UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new PostNotFoundException("Post not found"));
 
         Comment comment = new Comment();
         comment.setContent(commentDto.getContent());
