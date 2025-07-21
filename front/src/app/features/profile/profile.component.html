@@ -1,50 +1,44 @@
 <div class="profile-container">
-  <h2>Profil utilisateur</h2>
 
-  <form class="profile-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="user">
-    <div class="form-group">
-      <input
-        type="text"
-        placeholder="Nom d'utilisateur"
-        class="form-input"
-        formControlName="username"
-        value="{{ user.username }}"
-      />
-      <div class="error-message" *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched">
-        Le nom d'utilisateur est requis (minimum 3 caractères)
+  <form class="register-form" *ngIf="user" [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div class="user-info">
+    <h2>Profil utilisateur</h2>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput formControlName="username"/>
+          <mat-error *ngIf="postForm.get('username')?.invalid && postForm.get('username')?.touched">
+            Un nom d'utilisateur valide est requis (au moins 3 caractères)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Adresse e-mail</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error *ngIf="postForm.get('email')?.invalid && postForm.get('email')?.touched">
+            Une adresse e-mail valide est requise
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="postForm.get('password')?.invalid && postForm.get('password')?.touched">
+            Un mot de passe valide est requis (au moins 8 caractères, un chiffre, une majuscule et un caractère spécial)
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+
+      <div class="button-wrapper">
+        <button class="submit-btn" type="submit" [disabled]="!postForm || postForm.invalid">
+          Sauvegarder
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
       </div>
     </div>
-
-    <div class="form-group">
-      <input
-        type="email"
-        placeholder="Adresse email"
-        class="form-input"
-        formControlName="email"
-        value="{{ user.email }}"
-      />
-      <div class="error-message" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
-        Entrez une adresse email valide
-      </div>
-    </div>
-
-    <div class="form-group">
-      <input
-        type="password"
-        placeholder="Nouveau mot de passe"
-        class="form-input"
-        formControlName="password"
-      />
-      <div class="error-message" *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched">
-        Le mot de passe doit contenir au moins 6 caractères.
-      </div>
-    </div>
-
-    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-
-    <button type="submit" class="submit-button" [disabled]="submitting || profileForm.invalid">
-      {{ submitting ? 'Sauvegarde en cours...' : 'Sauvegarder' }}
-    </button>
   </form>
 
   <hr />
@@ -55,7 +49,9 @@
     <div class="subscription-card" *ngFor="let subject of subjects">
       <h3>{{ subject.name }}</h3>
       <p>Description : {{ subject.description }}</p>
-      <button class="unsubscribe-btn" (click)="unsubscribe(subject)">Se désabonner</button>
+      <div class="btn-container">
+        <button class="unsubscribe-btn" (click)="unsubscribe(subject)">Se désabonner</button>
+      </div>
     </div>
   </div>
 </div>

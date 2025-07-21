@@ -1,28 +1,48 @@
-.register-container {
+.header {
+  display: block;
+  border: black solid 1px;
+
+  .logo img{
+    width: 140px;
+    height: 81px;
+  }
+}
+
+.back-button {
+  color: black;
+
+  mat-icon {
+    font-size: 30px;
+  }
+}
+
+.hide-logo {
+  display: none;
+}
+
+.login-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
   padding: 1rem;
 
-  mat-card {
+  .card {
     padding: 2rem;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
 
-    mat-card-header {
+    .card-header {
       justify-content: center;
-      margin-bottom: 1rem;
+      margin-bottom: 3rem;
 
-      mat-card-title {
+      .card-title {
         font-size: 1.5rem;
         text-align: center;
-        font-weight: bold;
+        font-weight: normal;
       }
     }
 
-    mat-card-content {
+    card-content {
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -37,36 +57,54 @@
       justify-content: center;
       margin-top: 1rem;
 
-      button {
-        background-color: #a28ae4;
-        color: white;
-        font-weight: bold;
-        padding: 0.5rem 1.5rem;
+      .submit-btn {
+        margin: auto;
+        width: 150px;
+        padding: 12px 0;
+        background: #8c6be8;
+        color: #fff;
+        border: none;
         border-radius: 8px;
-        text-transform: none;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
 
         &:hover {
-          background-color: #8f74d6;
+          background: #6c4fc3;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          background-color: #ccc;
+          color: #666;
+          cursor: not-allowed;
         }
       }
     }
 
-    .error {
+    .error-message {
       color: red;
-      display: block;
-      margin-top: 1rem;
       text-align: center;
+      margin-top: 1rem;
     }
   }
 }
 
-.back-button {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  color: black;
 
-  mat-icon {
-    font-size: 24px;
+@media (max-width: 768px) {
+  .header {
+    display: none;
+  }
+
+  .hide-logo {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+
+    .logo img{
+      width: 225px;
+      height: 130px;
+    }
   }
 }

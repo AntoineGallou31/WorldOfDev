@@ -8,9 +8,10 @@
             <a (click)="logout()" class="logout">Se déconnecter</a>
             <a routerLink="/feed" routerLinkActive="active">Articles</a>
             <a routerLink="/subjects" routerLinkActive="active">Thèmes</a>
-          </div>
+          <span class="side-menu-spacer"></span>
           <div class="profile-icon" routerLink="/profile" routerLinkActive="active">
-            <img src="assets/icon_user.png" alt="Profil" />
+            <img src="assets/icon-user.svg" alt="Profil" />
+          </div>
           </div>
         </div>
       </mat-nav-list>
@@ -30,7 +31,7 @@
               <a routerLink="/subjects" routerLinkActive="active">Thèmes</a>
             </div>
             <div class="profile-icon" routerLink="/profile" routerLinkActive="active">
-              <img src="assets/icon_user.png" alt="Profil" />
+              <img src="assets/icon-user.svg" alt="Profil" />
             </div>
           </div>
           <button mat-icon-button class="menu-button" (click)="sidenav.toggle()">

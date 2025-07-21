@@ -32,14 +32,10 @@ export class AuthService {
   }
 
   register(registerRequest: { email: string; username: string; password: string }) {
-    return this.http.post<void>(`${this.apiUrl}/register`, registerRequest);
+    return this.http.post<{ token: string }>(`${this.apiUrl}/register`, registerRequest)
+      .pipe(tap(response => {
+        localStorage.setItem('token', response.token);
+    }));
   }
 
-  getCurrentUser(): any {
-    const token = this.getToken();
-    if (!token) return null;
-
-    const payload = token.split('.')[1];
-    return JSON.parse(atob(payload));
-  }
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {LoginRequest} from "../../interfaces/login-request";
@@ -9,45 +9,53 @@ import {LoginRequest} from "../../interfaces/login-request";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public hide = true;
-  public onError = false;
-
-  public form = this.fb.group({
-    identifier: [
-      '',
-      [
-        Validators.required,
-      ]
-    ],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.min(3)
-      ]
-    ]
-  });
+  public errorMessage = '';
+  postForm!: FormGroup;
 
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               private router: Router,
   ) {}
 
-  public onSubmit(): void {
-    if (this.form.invalid) {
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.postForm = this.fb.group({
+      identifier: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
+
+  onSubmit(): void {
+    if (this.postForm.invalid) {
+        this.markFormGroupTouched(this.postForm);
       return;
     }
-    const loginRequest = this.form.value as LoginRequest;
+
+    const loginRequest = this.postForm.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: () => {
-        this.router.navigate(['/subjects']);
+        this.router.navigate(['/feed']);
       },
-      error: () => {
-        this.onError = true;
+      error: (error) => {
+        if (error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+        }
       }
     });
   }
 
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      control?.markAsTouched();
+    });
+  }
 }

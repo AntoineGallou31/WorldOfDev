@@ -1,5 +1,6 @@
 .subjects-container {
   padding: 24px;
+  background-color: white;
 }
 
 .subjects-grid {
@@ -32,13 +33,17 @@
 }
 
 .subscribe-button {
+  width: 166px;
   padding: 10px 16px;
   border: none;
   border-radius: 8px;
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
   color: white;
-  background-color: #7c3aed;
+  background-color: #7763C5;
+  display: block;
+  margin: 0 auto;
 
   &.subscribed {
     background-color: #9ca3af; // gris

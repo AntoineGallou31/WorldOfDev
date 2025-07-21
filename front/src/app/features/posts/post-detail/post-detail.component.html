@@ -1,54 +1,61 @@
-<div class="article-page-container">
-  <header class="header">
-    <span class="material-icons back-arrow" routerLink='/feed'>arrow_back</span>
-    <h1 class="article-title">{{ post?.title | titlecase}}</h1>
-  </header>
+<div class="back-button">
+  <span class="material-icons back-arrow" routerLink='/feed'>arrow_back</span>
+</div>
 
-  <section class="article-meta">
-    <span class="meta-item">{{ post?.createdAt | date }}</span>
-    <span class="meta-item">{{ post?.userUsername | titlecase }}</span>
-    <span class="meta-item">{{ post?.subjectName | titlecase }}</span>
-  </section>
+<div class="page">
+  <div class="article-page-container">
+    <header class="header">
+      <h1 class="article-title">{{ post?.title | titlecase}}</h1>
+    </header>
 
-  <section class="article-content">
-    <p>{{ post?.content }}</p>
-  </section>
+    <section class="article-meta">
+      <span class="meta-item">{{ post?.createdAt | date:'d MMMM y' }}</span>
+      <span class="meta-item">{{ post?.userUsername | titlecase }}</span>
+      <span class="meta-item">{{ post?.subjectName | titlecase }}</span>
+    </section>
 
-  <div class="divider"></div>
+    <section class="article-content">
+      <p>{{ post?.content }}</p>
+    </section>
 
-  <section class="comments-section">
-    <h2 class="comments-heading">Commentaires</h2>
-      <div class="comment-item" *ngFor="let comment of post?.comments">
-        <div class="comment-header">
-          <span class="comment-author">{{ comment.authorUsername }}</span>
+    <div class="divider"></div>
+
+    <section class="comments-section">
+      <h2 class="comments-heading">Commentaires</h2>
+        <div class="comment-item" *ngFor="let comment of post?.comments">
+          <div class="comment-header">
+            <span class="comment-author">{{ comment.authorUsername }}</span>
+          </div>
+          <div class="comment-content">
+            <p>{{ comment.content }}</p>
+          </div>
         </div>
-        <div class="comment-content">
-          <p>{{ comment.content }}</p>
-        </div>
-      </div>
-  </section>
+    </section>
 
-  <section class="comment-input-section">
-    <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
-      <div class="comment-input-container">
-      <textarea
-        class="comment-textarea"
-        placeholder="Écrivez ici votre commentaire"
-        formControlName="content"
-        [disabled]="submittingComment"
-      ></textarea>
-        <button
-          type="submit"
-          [disabled]="commentForm.invalid || submittingComment"
-          class="comment-submit-button"
-          title="Envoyer le commentaire"
-        >
-          <span class="material-icons send-icon">send</span>
-        </button>
-      </div>
-      <div class="error-message" *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.touched">
-        Le commentaire doit contenir au moins 2 caractères.
-      </div>
-    </form>
-  </section>
+    <section class="comment-input-section">
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+        <div class="comment-input-container">
+        <textarea
+          class="comment-textarea"
+          placeholder="Écrivez ici votre commentaire"
+          formControlName="content"
+          [disabled]="submittingComment"
+        ></textarea>
+          <button
+            type="submit"
+            [disabled]="commentForm.invalid || submittingComment"
+            class="comment-submit-button"
+            title="Envoyer le commentaire"
+          >
+            <span class="send-icon">
+              <img src="/assets/icon-send.svg" alt="logo"/>
+            </span>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.touched">
+          Le commentaire doit contenir au moins 2 caractères.
+        </div>
+      </form>
+    </section>
+  </div>
 </div>

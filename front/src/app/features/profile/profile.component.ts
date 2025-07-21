@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from "../../core/interfaces/user";
 import {Subject} from "../../core/interfaces/subject";
 import {ProfileService} from "./services/profile.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {SubjectService} from "../subjects/services/subject.service";
 
 @Component({
@@ -14,9 +14,8 @@ export class ProfileComponent implements OnInit {
 
   subjects: Subject[] = [];
   user: User | null = null;
-  submitting = false;
   errorMessage = '';
-  profileForm!: FormGroup;
+  postForm!: FormGroup;
 
   constructor(
     private profileService : ProfileService,
@@ -25,15 +24,16 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initForm();
     this.getUserProfile();
     this.getSubjectSubscribed();
   }
 
-  initProfileForm(): void {
-    this.profileForm = this.fb.group({
-      username: [this.user?.username || '', [Validators.required, Validators.minLength(3)]],
-      email: [this.user?.email || '', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(6)]]
+  initForm(): void {
+    this.postForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.min(3), Validators.max(20)]],
+      password: ['', [Validators.required, Validators.min(8), Validators.max(40), this.passwordComplexityValidator.bind(this)]]
     });
   }
 
@@ -41,8 +41,11 @@ export class ProfileComponent implements OnInit {
     this.profileService.getUserProfile().subscribe({
       next: (user) => {
         this.user = user;
-        this.initProfileForm();
-        console.log('User profile loaded:', this.user);
+        this.postForm.patchValue({
+          email: user.email,
+          username: user.username,
+          password: ''
+        });
       },
       error: (err) => {
         console.error('Error loading user profile:', err);
@@ -62,34 +65,22 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.profileForm.invalid) {
-      this.markFormGroupTouched(this.profileForm);
+    if (this.postForm.invalid) {
+        this.markFormGroupTouched(this.postForm);
       return;
     }
 
-    this.submitting = true;
-
     if (this.user) {
-      this.profileService.updateUserProfile(this.user.id, this.profileForm.value).subscribe({
+      this.profileService.updateUserProfile(this.user.id, this.postForm.value).subscribe({
         next: (response: any) => {
           console.log('Profil mise à jour avec succès', response);
-          this.submitting = false;
         },
         error: (err: any) => {
           console.error('Erreur lors de la mise à jour', err);
           this.errorMessage = 'Une erreur est survenue lors de la mise à jour du profil.';
-          this.submitting = false;
         }
       });
     }
-  }
-
-  // Utilitaire pour marquer tous les champs comme touchés (pour afficher les erreurs)
-  private markFormGroupTouched(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control?.markAsTouched();
-    });
   }
 
   unsubscribe(subject: Subject) {
@@ -101,5 +92,24 @@ export class ProfileComponent implements OnInit {
         console.error('Erreur lors de l\'abonnement', err);
       }
     })
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      control?.markAsTouched();
+    });
+  }
+
+  private passwordComplexityValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value || '';
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    const hasSpecialChar = /[^A-Za-z0-9]/.test(value);
+    const isValidLength = value.length >= 8;
+
+    const valid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isValidLength;
+    return valid ? null : { passwordComplexity: true };
   }
 }

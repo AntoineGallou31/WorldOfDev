@@ -12,7 +12,6 @@ import { Component, OnInit } from '@angular/core';
   export class PostCreateComponent implements OnInit {
     subjects: Subject[] = [];
     postForm!: FormGroup;
-    submitting = false;
     errorMessage = '';
 
     constructor(
@@ -53,22 +52,16 @@ import { Component, OnInit } from '@angular/core';
         return;
       }
 
-      this.submitting = true;
-
       this.postService.createPost(this.postForm.value).subscribe({
         next: (response) => {
-          console.log('Article créé avec succès', response);
           this.router.navigate(['/feed']);
         },
         error: (err) => {
-          console.error('Erreur lors de la création de l\'article', err);
           this.errorMessage = 'Une erreur est survenue lors de la création de l\'article.';
-          this.submitting = false;
         }
       });
     }
 
-    // Utilitaire pour marquer tous les champs comme touchés (pour afficher les erreurs)
     private markFormGroupTouched(formGroup: FormGroup) {
       Object.keys(formGroup.controls).forEach(field => {
         const control = formGroup.get(field);

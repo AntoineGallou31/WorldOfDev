@@ -9,9 +9,7 @@ import { Component, OnInit } from '@angular/core';
     })
     export class FeedComponent implements OnInit {
       posts: Post[] = [];
-      loading = false;
-      error = false;
-      sortDirection: 'asc' | 'desc' = 'desc'; // Par défaut tri décroissant (plus récent en premier)
+      sortDirection: 'asc' | 'desc' = 'desc';
 
       constructor(private postService: PostService) { }
 
@@ -20,19 +18,13 @@ import { Component, OnInit } from '@angular/core';
       }
 
       fetchPosts(): void {
-        this.loading = true;
-        this.error = false;
-
         this.postService.getPosts().subscribe({
           next: (data) => {
             this.posts = data;
             this.sortPosts();
-            this.loading = false;
           },
           error: (err) => {
             console.error('Erreur lors de la récupération des posts', err);
-            this.error = true;
-            this.loading = false;
           }
         });
       }

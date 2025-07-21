@@ -20,6 +20,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, ProfileComponent, LayoutComponent, NavbarComponent, FeedComponent, SubjectListComponent, PostDetailComponent, PostCreateComponent],
@@ -35,7 +38,10 @@ import {MatListModule} from "@angular/material/list";
     MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCardModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent],
