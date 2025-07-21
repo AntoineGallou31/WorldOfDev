@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
             identifierType = "username";
         }
 
-        // Vérifie le mot de passe
+        // Check password
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Mot de passe incorrect.");
         }

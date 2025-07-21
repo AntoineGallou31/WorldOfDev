@@ -51,6 +51,7 @@ public class SubjectServiceImpl implements SubjectService {
         return SubjectMapper.toDtoList(allSubjects, user.getSubscriptions());
     }
 
+    // This method retrieves all subjects without checking subscription status
     @Override
     @Transactional
     public MessageResponseDto subscribeToSubject(Long subjectId, UserDetails userDetails) {
@@ -76,6 +77,7 @@ public class SubjectServiceImpl implements SubjectService {
         return new MessageResponseDto().setMessage("Abonnement réussi");
     }
 
+    // This method allows users to unsubscribe from a subject
     @Override
     @Transactional
     public MessageResponseDto unsubscribeFromSubject(Long subjectId, UserDetails userDetails) {
@@ -101,6 +103,7 @@ public class SubjectServiceImpl implements SubjectService {
         return new MessageResponseDto().setMessage("Désabonnement réussi");
     }
 
+    // Helper methods to retrieve User and Subject entities or throw exceptions if not found
     private User getUserOrThrow(Long userId) {
         if (userId == null) {
             throw new IllegalArgumentException("L'ID utilisateur ne peut pas être null");
@@ -109,6 +112,7 @@ public class SubjectServiceImpl implements SubjectService {
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé avec l'ID: " + userId));
     }
 
+    // Helper method to retrieve Subject entity or throw an exception if not found
     private Subject getSubjectOrThrow(Long subjectId) {
         if (subjectId == null) {
             throw new IllegalArgumentException("L'ID du sujet ne peut pas être null");
@@ -117,6 +121,7 @@ public class SubjectServiceImpl implements SubjectService {
                 .orElseThrow(() -> new SubjectNotFoundException("Sujet non trouvé avec l'ID: " + subjectId));
     }
 
+    // Helper method to extract user ID from UserDetails
     private Long getUserIdFromUserDetails(UserDetails userDetails) {
         if (userDetails == null) {
             throw new IllegalArgumentException("Les informations d'utilisateur ne peuvent pas être null");

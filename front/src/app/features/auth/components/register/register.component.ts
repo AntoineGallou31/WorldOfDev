@@ -3,6 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} f
 import {RegisterRequest} from "../../interfaces/register-request";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {markFormGroupTouched, passwordComplexityValidator} from "../../../../shared/utils/my-utils";
 
 @Component({
   selector: 'app-register',
@@ -27,13 +28,13 @@ export class RegisterComponent implements OnInit  {
     this.postForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.min(3), Validators.max(20)]],
-      password: ['', [Validators.required, Validators.min(8), Validators.max(40), this.passwordComplexityValidator.bind(this)]]
+      password: ['', [Validators.required, Validators.min(8), Validators.max(40), passwordComplexityValidator.bind(this)]]
     });
   }
 
   onSubmit(): void {
     if (this.postForm.invalid) {
-      this.markFormGroupTouched(this.postForm);
+      markFormGroupTouched(this.postForm);
       return;
     }
 
@@ -48,24 +49,5 @@ export class RegisterComponent implements OnInit  {
           }
         }
       });
-  }
-
-  private markFormGroupTouched(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control?.markAsTouched();
-    });
-  }
-
-  private passwordComplexityValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value || '';
-    const hasUpperCase = /[A-Z]/.test(value);
-    const hasLowerCase = /[a-z]/.test(value);
-    const hasNumber = /\d/.test(value);
-    const hasSpecialChar = /[^A-Za-z0-9]/.test(value);
-    const isValidLength = value.length >= 8;
-
-    const valid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isValidLength;
-    return valid ? null : { passwordComplexity: true };
   }
 }

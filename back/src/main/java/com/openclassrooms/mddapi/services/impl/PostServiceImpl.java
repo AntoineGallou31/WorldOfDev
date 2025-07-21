@@ -61,6 +61,7 @@ public class PostServiceImpl implements PostService {
         return new PostListResponseDto(postDtos);
     }
 
+    // This method retrieves all posts from the database, including their comments and authors.
     @Override
     public PostDto getPostById(Long id) {
         Post post = postRepository.findByIdWithComments(id)
@@ -68,6 +69,7 @@ public class PostServiceImpl implements PostService {
         return PostMapper.toDto(post);
     }
 
+    // This method retrieves all posts from the database, including their comments and authors.
     @Override
     public MessageResponseDto createPost(PostRequestDto postRequestDto, UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername());
@@ -89,6 +91,7 @@ public class PostServiceImpl implements PostService {
         return new MessageResponseDto().setMessage("Post created successfully");
     }
 
+    // This method allows a user to add a comment to a post.
     @Override
     public MessageResponseDto addComment(Long postId, CommentRequestDto commentDto, UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername());

@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-
+    // This method loads a user by their email address.
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         if (email == null || email.trim().isEmpty()) {
             throw new ValidationException("L'email ne peut pas être vide");
@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    // This method loads a user by their username.
     public UserDetails loadUserByUsername(String username) {
         if (username == null || username.trim().isEmpty()) {
             throw new ValidationException("Le nom d'utilisateur ne peut pas être vide");
@@ -58,6 +59,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé avec le nom d'utilisateur: " + username));
     }
 
+    // This method retrieves the user details based on the UserDetails object.
     public UserResponseDto getUser(UserDetails userDetails) {
         if (userDetails == null) {
             throw new ValidationException("Les détails utilisateur ne peuvent pas être null");
@@ -76,6 +78,7 @@ public class UserServiceImpl implements UserService {
         return userToUserResponseDto(user);
     }
 
+    // This method updates a user by their ID.
     public MessageResponseDto updateUserById (Long id, UserUpdateDto userUpdateDto) {
         if (id == null) {
             throw new ValidationException("L'ID utilisateur ne peut pas être null");
@@ -104,6 +107,7 @@ public class UserServiceImpl implements UserService {
         return new MessageResponseDto().setMessage("Compte mis à jour avec succès !");
     }
 
+    // This method converts a User entity to a UserResponseDto.
     private UserResponseDto userToUserResponseDto(User user) {
         UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setId(user.getId());

@@ -29,11 +29,7 @@ import { Component, OnInit } from '@angular/core';
         });
       }
 
-      toggleSortDirection(): void {
-        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
-        this.sortPosts();
-      }
-
+      // Sort posts by creation date in the specified direction
       sortPosts(): void {
         this.posts.sort((a, b) => {
           const dateA = new Date(a.createdAt).getTime();
@@ -42,6 +38,13 @@ import { Component, OnInit } from '@angular/core';
         });
       }
 
+      // Toggle the sort direction between ascending and descending
+      toggleSortDirection(): void {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+        this.sortPosts();
+      }
+
+      // Get the CSS class for the sort icon based on the current sort direction
       getSortIconClass(): string {
         return this.sortDirection === 'desc' ? 'sort-icon-desc' : 'sort-icon-asc';
       }

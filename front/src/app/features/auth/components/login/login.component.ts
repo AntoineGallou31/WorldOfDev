@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {LoginRequest} from "../../interfaces/login-request";
+import {markFormGroupTouched} from "../../../../shared/utils/my-utils";
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.postForm.invalid) {
-        this.markFormGroupTouched(this.postForm);
+        markFormGroupTouched(this.postForm);
       return;
     }
 
@@ -49,13 +50,6 @@ export class LoginComponent implements OnInit {
           this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
         }
       }
-    });
-  }
-
-  private markFormGroupTouched(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control?.markAsTouched();
     });
   }
 }

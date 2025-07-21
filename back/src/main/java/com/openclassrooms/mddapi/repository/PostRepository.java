@@ -13,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+
+    // Method to find posts by subject with comments and authors
     @Query("SELECT DISTINCT p FROM Post p " +
                "LEFT JOIN FETCH p.comments c " +
                "LEFT JOIN FETCH p.user " +
@@ -20,6 +22,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                "WHERE p.subject IN :subjects")
     List<Post> findBySubjectInWithCommentsAndAuthors(@Param("subjects") Collection<Subject> subjects);
 
+    // Method to find posts by subject with comments
     @Query("SELECT p FROM Post p LEFT JOIN FETCH p.comments WHERE p.id = :id")
     Optional<Post> findByIdWithComments(Long id);
 }

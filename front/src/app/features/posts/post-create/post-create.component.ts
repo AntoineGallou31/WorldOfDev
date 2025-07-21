@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
   import { PostService } from "../services/post.service";
   import { Subject } from "../../../core/interfaces/subject";
   import { Router } from '@angular/router';
+import {markFormGroupTouched} from "../../../shared/utils/my-utils";
 
   @Component({
     selector: 'app-post-create',
@@ -48,7 +49,7 @@ import { Component, OnInit } from '@angular/core';
 
     onSubmit(): void {
       if (this.postForm.invalid) {
-          this.markFormGroupTouched(this.postForm);
+          markFormGroupTouched(this.postForm);
         return;
       }
 
@@ -59,13 +60,6 @@ import { Component, OnInit } from '@angular/core';
         error: (err) => {
           this.errorMessage = 'Une erreur est survenue lors de la création de l\'article.';
         }
-      });
-    }
-
-    private markFormGroupTouched(formGroup: FormGroup) {
-      Object.keys(formGroup.controls).forEach(field => {
-        const control = formGroup.get(field);
-        control?.markAsTouched();
       });
     }
   }

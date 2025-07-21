@@ -11,7 +11,7 @@ export class AuthPageComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    // Delete the session token if it exists
     this.authService.logout();
   }
-
 }
