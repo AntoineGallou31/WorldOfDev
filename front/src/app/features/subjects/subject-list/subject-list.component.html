@@ -1,0 +1,33 @@
+<div class="subjects-container">
+  <div *ngIf="loading" class="loading-indicator">Chargement des sujets...</div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+    <button (click)="loadSubjects()" class="retry-button">Réessayer</button>
+  </div>
+
+  <div class="subjects-grid" *ngIf="!loading && !error">
+    <div
+      class="subject-card"
+      *ngFor="let subject of subjects"
+      style="cursor: pointer;"
+    >
+      <h3 class="subject-title">{{ subject.name }}</h3>
+      <p class="subject-description">
+        {{ subject.description }}
+      </p>
+      <button
+        class="subscribe-button"
+        [ngClass]="{ 'subscribed': subject.subscribed }"
+        [disabled]="subject.subscribed"
+        (click)="onSubscribe(subject); $event.stopPropagation()"
+      >
+        {{ subject.subscribed ? 'Déjà abonné' : 'S\'abonner' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && subjects.length === 0" class="empty-state">
+    Aucun sujet disponible pour le moment.
+  </div>
+</div>

@@ -1,0 +1,56 @@
+.subjects-container {
+  padding: 24px;
+  background-color: white;
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.subject-card {
+  background-color: #f3f4f6; // gris clair
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.subject-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.subject-description {
+  font-size: 14px;
+  color: #374151; // gris foncé
+  margin-bottom: 16px;
+}
+
+.subscribe-button {
+  width: 166px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  background-color: #7763C5;
+  display: block;
+  margin: 0 auto;
+
+  &.subscribed {
+    background-color: #9ca3af; // gris
+    cursor: default;
+  }
+
+  &:not(.subscribed):hover {
+    background-color: #6b21a8;
+  }
+}

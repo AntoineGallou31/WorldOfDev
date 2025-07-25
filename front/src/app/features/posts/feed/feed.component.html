@@ -1,0 +1,29 @@
+<div class="feed-container">
+        <div class="feed-header">
+          <button class="create-button" routerLink="/create">Créer un article</button>
+          <div class="sort-section" (click)="toggleSortDirection()">
+            <span class="sort-label">Trier par</span>
+            <span class="sort-icon" [ngClass]="getSortIconClass()">
+              {{ sortDirection === 'desc' ? '↓' : '↑' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="no-articles" *ngIf="posts.length === 0">
+          <p>Aucun article pour l'instant ...</p>
+          <p>Abonnez-vous dans la page des <a routerLink="/subjects">Thèmes</a></p>
+        </div>
+
+        <div class="articles-grid">
+          <div class="article-card" *ngFor="let post of posts" [routerLink]="['/posts', post.id]">
+            <h3 class="article-title">{{ post.title | titlecase }}</h3>
+            <div class="article-meta">
+              <span>{{ post.createdAt | date:'d MMMM y' }}</span>
+              <span>{{ post.userUsername | titlecase }}</span>
+            </div>
+            <p class="article-content">
+              {{ post.content }}...
+            </p>
+          </div>
+        </div>
+      </div>

@@ -1,0 +1,141 @@
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  color: #000;
+  background-color: white;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+  }
+
+  .register-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mat-form-field {
+    width: 50%;
+
+    @media (max-width: 640px) {
+      width: 90%;
+    }
+  }
+
+  .user-info {
+    width: 100%;
+  }
+
+  .mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    input {
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #7763C5;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #5638cc;
+      }
+    }
+  }
+
+  hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid #000;
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .submit-btn {
+      margin: auto;
+      width: 150px;
+      padding: 12px 0;
+      background: #8c6be8;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #6c4fc3;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        background-color: #ccc;
+        color: #666;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .subscriptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+
+    .subscription-card {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      border-radius: 8px;
+      max-width: 300px;
+      min-width: 250px;
+      flex: 1;
+
+      h3 {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: #333;
+        margin-bottom: 1rem;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+      }
+      .unsubscribe-btn {
+        background-color: #7763C5;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: auto;
+
+        &:hover {
+          background-color: #5638cc;
+        }
+      }
+    }
+  }
+}

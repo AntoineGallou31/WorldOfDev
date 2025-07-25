@@ -1,0 +1,136 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid black;
+  background-color: white;
+  font-weight: 400;
+  font-size: 20px;
+
+  .logo img {
+    height: 80px;
+
+    @media screen and (max-width: 768px) {
+      height: 53px;
+    }
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  .side-menu-spacer {
+    display: none;
+  }
+
+  .desktop-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-right: 50px;
+
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+
+      &.logout {
+        color: darkred;
+        font-size: medium;
+        font-weight: 700;
+      }
+
+      &.active {
+        color: #6C5CCF;
+      }
+    }
+  }
+
+  .profile-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: #ddd;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+      border: #6C5CCF 3px solid;
+    }
+  }
+  .profile-icon img {
+    width: 25px;
+    height: auto;
+  }
+
+  .menu-spacer {
+    flex: 1 1 auto;
+  }
+}
+
+/* Styles pour mobile */
+@media screen and (max-width: 768px) {
+  .navbar {
+    .desktop-menu {
+      display: none;
+    }
+
+    .menu-button {
+      display: block;
+    }
+  }
+
+  .sidenav-content {
+    padding: 16px;
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 20px;
+
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+
+        &.logout {
+          color: darkred;
+          font-size: small;
+          font-weight: 700;
+        }
+
+        &.active {
+          color: blueviolet;
+        }
+      }
+    }
+    .profile-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      background-color: #ddd;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 450%;
+
+      &.active {
+        border: #6C5CCF 3px solid;
+      }
+    }
+    .profile-icon img {
+      width: 25px;
+      height: auto;
+    }
+  }
+}
